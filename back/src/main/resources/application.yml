@@ -1,0 +1,146 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 1000
+      min-spare: 30
+    max-swallow-size: -1
+  shutdown: graceful
+spring:
+  # 数据源
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/order?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      filter:
+        wall:
+          config:
+            multi-statement-allow: true
+    hikari:
+      max-lifetime: 60000
+      maximum-pool-size: 1000
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    # Redis
+    redis:
+      host: 127.0.0.1
+      #    password:
+      # 数据库索引 默认0
+      database: 0
+      port: 6379
+      # 超时时间 Duration类型 3秒
+      timeout: 3S
+    # 文件大小上传配置
+    servlet:
+      multipart:
+        max-file-size: 50MB
+        max-request-size: 50MB
+    jackson:
+      time-zone: GMT+8
+      serialization:
+        fail-on-empty-beans: false
+captcha:
+  # 图片验证码验证
+  image:
+    - /zwz/login # 登录接口
+    - /zwz/oauth2/authorize # 认证接口
+    - /zwz/user/regist # 注册接口
+  # 短信验证码验证
+  sms:
+    - /zwz/user/smsLogin # 短信登录接口
+    - /zwz/user/resetByMobile # 手机重置密码
+    - /zwz/user/changeMobile # 更换绑定手机
+    - /zwz/app/v1/member/quickLogin # 会员快捷登录注册接口
+  # Vaptcha验证码验证
+  vaptcha:
+    - /zwz/common/captcha/sendRegistSms/** # 发送注册短信
+    - /zwz/common/captcha/sendResetSms/** # 发送重置密码短信
+    - /zwz/email/sendResetCode/** # 发送重置密码邮件
+    - /zwz/social/relate # 绑定第三方账号
+  # Email验证码验证
+  email:
+    - /zwz/email/resetByEmail # 邮件重置密码
+    - /zwz/email/editEmail # 修改绑定邮箱
+
+# 忽略url
+ignored:
+  # 无需登录认证的请求
+  urls:
+    - /zwz/app/v1/**
+    - /zwz/oauth2/**
+    - /zwz/actuator/**
+    - /zwz/admin/**
+    - /editor-app/**
+    - /zwz/act/**
+    - /zwz/dictData/getByType/**
+    - /zwz/email/sendResetCode/**
+    - /zwz/email/resetByEmail
+    - /zwz/file/view/**
+    - /zwz/social/**
+    - /zwz/ws/**
+    - /zwz/setting/notice
+    - /zwz/user/regist
+    - /zwz/user/smsLogin
+    - /zwz/user/resetByMobile
+    - /zwz/common/**
+    - /druid/**
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /swagger/**
+    - /**/v2/api-docs
+    - /**/*.js
+    - /**/*.css
+    - /**/*.png
+    - /**/*.ico
+    - /zwz/test/**
+  # 限流及黑名单不拦截的路径
+  limitUrls:
+    - /**/*.js
+    - /**/*.css
+    - /**/*.png
+    - /**/*.ico
+
+# Actuator
+management:
+  endpoint:
+    health:
+      show-details: always
+      status:
+        http-mapping:
+          DOWN: 200
+          OUT_OF_SERVICE: 200
+          FATAL: 200
+          UNKNOWN: 200
+  endpoints:
+    web:
+      base-path: /zwz/actuator/
+      exposure:
+        include: '*'
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 日志
+logging:
+  # 输出级别
+  level:
+    root: info
+  file:
+    path: logs
+  logback:
+    rollingpolicy:
+      max-history: 2000
+      max-file-size: 5MB

@@ -1,0 +1,109 @@
+package ${entity.controllerPackage};
+
+import cn.zwz.base.XbootBaseController;
+import cn.zwz.common.utils.PageUtil;
+import cn.zwz.common.utils.ResultUtil;
+import cn.zwz.common.vo.PageVo;
+import cn.zwz.common.vo.Result;
+import cn.zwz.common.vo.SearchVo;
+import ${entity.entityPackage}.${entity.className};
+import ${entity.servicePackage}.${entity.className}Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
+<%
+if(entity.activiti){
+%>
+import cn.zwz.common.utils.SecurityUtil;
+import cn.zwz.modules.activiti.entity.ActBusiness;
+import cn.zwz.modules.activiti.service.ActBusinessService;
+import cn.hutool.core.util.StrUtil;
+<%
+}
+%>
+
+/**
+ * @author ${entity.author}
+ */
+@Slf4j
+@RestController
+@Api(description = "${entity.description}管理接口")
+@RequestMapping("/xboot/${entity.classNameLowerCase}")
+@Transactional
+public class ${entity.className}Controller extends XbootBaseController<${entity.className}, ${entity.primaryKeyType}> {
+
+    @Autowired
+    private ${entity.className}Service ${entity.classNameLowerCase}Service;
+
+    @Override
+    public ${entity.className}Service getService() {
+        return ${entity.classNameLowerCase}Service;
+    }
+
+    <%
+    if(entity.activiti){
+    %>
+    @Autowired
+    private ActBusinessService actBusinessService;
+
+    @Autowired
+    private SecurityUtil securityUtil;
+    <%
+    }
+    %>
+
+    @RequestMapping(value = "/getByCondition", method = RequestMethod.GET)
+    @ApiOperation(value = "多条件分页获取")
+    public Result<Page<${entity.className}>> getByCondition(${entity.className} ${entity.classNameLowerCase},
+                                                            SearchVo searchVo,
+                                                            PageVo pageVo){
+
+        Page<${entity.className}> page = ${entity.classNameLowerCase}Service.findByCondition(${entity.classNameLowerCase}, searchVo, PageUtil.initPage(pageVo));
+        <%
+        if(entity.activiti){
+        %>
+        for(${entity.className} obj: page.getContent()){
+            // 关联流程表 查询关联流程状态和结果等信息
+            if(StrUtil.isNotBlank(obj.getActBusinessId())){
+                ActBusiness actBusiness = actBusinessService.get(obj.getActBusinessId());
+                obj.setStatus(actBusiness.getStatus());
+                obj.setResult(actBusiness.getResult());
+                obj.setApplyTime(actBusiness.getApplyTime());
+                obj.setRouteName(actBusiness.getRouteName());
+                obj.setProcInstId(actBusiness.getProcInstId());
+            }
+        }
+        <%
+        }
+        %>
+        return new ResultUtil<Page<${entity.className}>>().setData(page);
+    }
+
+    <%
+    if(entity.activiti){
+    %>
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ApiOperation(value = "添加关联流程")
+    public Result<Object> add(${entity.className} ${entity.classNameLowerCase}){
+
+        ${entity.className} obj = ${entity.classNameLowerCase}Service.save(${entity.classNameLowerCase});
+        // 保存至我的申请业务
+        String userId = securityUtil.getCurrUser().getId();
+        ActBusiness actBusiness = new ActBusiness();
+        actBusiness.setUserId(userId);
+        // 记录关联业务表ID
+        actBusiness.setTableId(obj.getId());
+        ActBusiness a = actBusinessService.save(actBusiness);
+        // 记录关联流程状态表ID
+        obj.setActBusinessId(a.getId());
+        ${entity.classNameLowerCase}Service.update(obj);
+        return ResultUtil.success("操作成功");
+    }
+    <%
+    }
+    %>
+}

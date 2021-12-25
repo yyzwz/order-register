@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <meta name="viewport" content="width=device-width,initial-scale=1.0"> -->
+  <link rel="icon" href="<%= BASE_URL %>logo.png">
+  <title>医院门诊预约挂号管理系统</title>
+  <meta name="keywords"
+    content="医院门诊预约挂号管理系统">
+  <meta name="description"
+    content="医院门诊预约挂号管理系统">
+  <!-- 部署CDN优化 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-i18n@8.15.1/dist/vue-i18n.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/view-design@4.2.0/dist/styles/iview.css">
+  <script src="https://cdn.jsdelivr.net/npm/view-design@4.2.0/dist/iview.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-lazyload@1.3.3/vue-lazyload.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@4.7.0/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.19.0/dist/apexcharts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts@1.5.3/dist/vue-apexcharts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.15.3/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dplayer@1.25.1/dist/DPlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/print-js@1.0.63/dist/print.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-json-pretty@1.6.2/vue-json-pretty.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css">
+  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.23.2/dist/vuedraggable.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/viewerjs@1.5.0/dist/viewer.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/viewerjs@1.5.0/dist/viewer.min.css">
+  <script src="https://v.vaptcha.com/v3.js"></script>
+  <style>
+    .page-loading-wrap {
+      padding: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .la-timer,
+    .la-timer>div {
+      position: relative;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    .la-timer {
+      display: block;
+      font-size: 0;
+      color: #fff;
+    }
+
+    .la-timer.la-dark {
+      color: #333;
+    }
+
+    .la-timer>div {
+      display: inline-block;
+      float: none;
+      background-color: currentColor;
+      border: 0 solid currentColor;
+    }
+
+    .la-timer {
+      width: 32px;
+      height: 32px;
+    }
+
+    .la-timer>div {
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border-width: 2px;
+      border-radius: 100%;
+    }
+
+    .la-timer>div:before,
+    .la-timer>div:after {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: block;
+      width: 2px;
+      margin-top: -1px;
+      margin-left: -1px;
+      content: "";
+      background: currentColor;
+      border-radius: 2px;
+      -webkit-transform-origin: 1px 1px 0;
+      -moz-transform-origin: 1px 1px 0;
+      -ms-transform-origin: 1px 1px 0;
+      -o-transform-origin: 1px 1px 0;
+      transform-origin: 1px 1px 0;
+      -webkit-animation: timer-loader 1250ms infinite linear;
+      -moz-animation: timer-loader 1250ms infinite linear;
+      -o-animation: timer-loader 1250ms infinite linear;
+      animation: timer-loader 1250ms infinite linear;
+      -webkit-animation-delay: -625ms;
+      -moz-animation-delay: -625ms;
+      -o-animation-delay: -625ms;
+      animation-delay: -625ms;
+    }
+
+    .la-timer>div:before {
+      height: 12px;
+    }
+
+    .la-timer>div:after {
+      height: 8px;
+      -webkit-animation-duration: 15s;
+      -moz-animation-duration: 15s;
+      -o-animation-duration: 15s;
+      animation-duration: 15s;
+      -webkit-animation-delay: -7.5s;
+      -moz-animation-delay: -7.5s;
+      -o-animation-delay: -7.5s;
+      animation-delay: -7.5s;
+    }
+
+    @-webkit-keyframes timer-loader {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @-moz-keyframes timer-loader {
+      0% {
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @-o-keyframes timer-loader {
+      0% {
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes timer-loader {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>加载资源失败.</strong>
+  </noscript>
+  <div id="app">
+    <div class="page-loading-wrap">
+      <div style="color: #4e9ff5" class="la-timer">
+        <div></div>
+      </div>
+      <h4 style="margin-top:20px;font-size:14px;font-weight:400;color: #515a6e;">正在加载资源...</h4>
+    </div>
+  </div>
+</body>
+
+</html>

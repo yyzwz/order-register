@@ -1,0 +1,6 @@
+/front/dist
+/front/node_modules
+/back/target
+/back/out
+/back/work
+/back/logs
