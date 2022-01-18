@@ -8,13 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="template" />
-        <module name="back" />
+        <module name="order-register" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="back" options="-parameters" />
+      <module name="order-register" options="-parameters" />
       <module name="template" options="-parameters" />
     </option>
   </component>

@@ -16,6 +16,7 @@ import org.springframework.util.PathMatcher;
 @Configuration
 @Import(cn.hutool.extra.spring.SpringUtil.class)
 public class BeansConfiguration {
+
     @Primary
     @Bean
     public TaskExecutor primaryTaskExecutor() {
@@ -25,7 +26,6 @@ public class BeansConfiguration {
 
     @Bean
     public PathMatcher pathMatcher(){
-
         return new AntPathMatcher();
     }
 }

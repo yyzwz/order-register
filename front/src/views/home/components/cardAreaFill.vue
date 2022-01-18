@@ -2,7 +2,7 @@
   <div>
     <Card class="card-area-fill">
       <div class="card-header">
-        <span class="title">访问量</span>
+        <span class="title">预约访问量</span>
         <Dropdown trigger="click">
           <Icon type="ios-more" size="22" style="cursor: pointer" />
           <DropdownMenu slot="list">

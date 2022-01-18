@@ -45,7 +45,6 @@ public class SystemLogAspect {
      */
     @Pointcut("@annotation(cn.zwz.common.annotation.SystemLog)")
     public void controllerAspect() {
-
     }
 
     /**
@@ -55,8 +54,6 @@ public class SystemLogAspect {
      */
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) throws InterruptedException{
-
-        //线程绑定变量（该数据只有当前请求的线程可见）
         Date beginTime = new Date();
         beginTimeThreadLocal.set(beginTime);
     }
@@ -128,7 +125,6 @@ public class SystemLogAspect {
 
         @Override
         public void run() {
-
             logService.save(log);
         }
     }
@@ -152,17 +148,14 @@ public class SystemLogAspect {
         Class targetClass = Class.forName(targetName);
         //获取该类中的方法
         Method[] methods = targetClass.getMethods();
-
         String description = "";
         Integer type = null;
-
         for(Method method : methods) {
             if(!method.getName().equals(methodName)) {
                 continue;
             }
             Class[] clazzs = method.getParameterTypes();
             if(clazzs.length != arguments.length) {
-                //比较方法中参数个数与从切点中获取的参数个数是否相同，原因是方法可以重载哦
                 continue;
             }
             description = method.getAnnotation(SystemLog.class).description();
@@ -172,5 +165,4 @@ public class SystemLogAspect {
         }
         return map;
     }
-
 }

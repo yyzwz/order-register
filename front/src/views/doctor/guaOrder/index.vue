@@ -15,6 +15,12 @@
                             <Option v-for="(item,index) in subList" :value="item.id" :key="index">{{ item.subName }}</Option>
                         </Select>
                     </Form-item>
+                    <Form-item label="">
+                        <Select v-model="searchForm.noeDate" placeholder="是否筛选今日" style="width:200px">
+                            <Option value="是">是</Option>
+                            <Option value="否">否</Option>
+                        </Select>
+                    </Form-item>
                     <Form-item style="margin-left:10px;" class="br">
                         <Button @click="handleSearch" type="primary" icon="ios-search" size="small" ghost>搜索</Button>
                         <Button @click="handleReset" type="warning" size="small" icon="md-refresh" ghost>重置</Button>

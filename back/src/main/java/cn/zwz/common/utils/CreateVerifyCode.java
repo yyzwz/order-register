@@ -2,6 +2,7 @@ package cn.zwz.common.utils;
 
 import cn.zwz.common.exception.CaptchaException;
 import cn.hutool.core.util.StrUtil;
+import io.swagger.annotations.ApiOperation;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -76,16 +77,13 @@ public class CreateVerifyCode {
         creatImage(code);
     }
 
-    /**
-     * 生成图片
-     */
+    @ApiOperation(value = "生成图片")
     private void creatImage() {
         // 字体的宽度
         int fontWidth = width / codeCount;
         // 字体的高度
         int fontHeight = height - 5;
         int codeY = height - 8;
-
         // 图像buffer
         buffImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = buffImg.getGraphics();
@@ -93,12 +91,10 @@ public class CreateVerifyCode {
         // 设置背景色
         g.setColor(getRandColor(200, 250));
         g.fillRect(0, 0, width, height);
-
         // 设置字体
         //Font font1 = getFont(fontHeight);
         Font font = new Font("Fixedsys", Font.BOLD, fontHeight);
         g.setFont(font);
-
         // 设置干扰线
         for (int i = 0; i < lineCount; i++) {
             int xs = random.nextInt(width);
@@ -108,7 +104,6 @@ public class CreateVerifyCode {
             g.setColor(getRandColor(1, 255));
             g.drawLine(xs, ys, xe, ye);
         }
-
         // 添加噪点 噪声率
         float yawpRate = 0.01f;
         int area = (int) (yawpRate * width * height);
@@ -118,25 +113,19 @@ public class CreateVerifyCode {
 
             buffImg.setRGB(x, y, random.nextInt(255));
         }
-
         // 得到随机字符
         String str1 = randomStr(codeCount);
         this.code = str1;
         for (int i = 0; i < codeCount; i++) {
             String strRand = str1.substring(i, i + 1);
             g.setColor(getRandColor(1, 255));
-            // g.drawString(a,x,y);
-            // a为要画出来的东西，x和y表示要画的东西最左侧字符的基线位于此图形上下文坐标系的 (x, y) 位置处
             g.drawString(strRand, i*fontWidth+3, codeY);
         }
 
     }
 
-    /**
-     * 生成指定字符图片
-     */
+    @ApiOperation(value = "生成指定字符图片")
     private void creatImage(String code) {
-
         if(StrUtil.isBlank(code)){
             throw new CaptchaException("验证码为空或已过期，请重新获取");
         }
@@ -145,7 +134,6 @@ public class CreateVerifyCode {
         // 字体的高度
         int fontHeight = height - 5;
         int codeY = height - 8;
-
         // 图像buffer
         buffImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = buffImg.getGraphics();
@@ -153,12 +141,10 @@ public class CreateVerifyCode {
         // 设置背景色
         g.setColor(getRandColor(200, 250));
         g.fillRect(0, 0, width, height);
-
         // 设置字体
         //Font font1 = getFont(fontHeight);
         Font font = new Font("Fixedsys", Font.BOLD, fontHeight);
         g.setFont(font);
-
         // 设置干扰线
         for (int i = 0; i < lineCount; i++) {
             int xs = random.nextInt(width);
@@ -168,7 +154,6 @@ public class CreateVerifyCode {
             g.setColor(getRandColor(1, 255));
             g.drawLine(xs, ys, xe, ye);
         }
-
         // 添加噪点 噪声率
         float yawpRate = 0.01f;
         int area = (int) (yawpRate * width * height);
@@ -178,25 +163,17 @@ public class CreateVerifyCode {
 
             buffImg.setRGB(x, y, random.nextInt(255));
         }
-
         this.code = code;
         for (int i = 0; i < code.length(); i++) {
             String strRand = code.substring(i, i + 1);
             g.setColor(getRandColor(1, 255));
-            // g.drawString(a,x,y);
-            // a为要画出来的东西，x和y表示要画的东西最左侧字符的基线位于此图形上下文坐标系的 (x, y) 位置处
             g.drawString(strRand, i*fontWidth+3, codeY);
         }
-
     }
 
-    /**
-     * 得到随机字符
-     * @param n
-     * @return
-     */
+    @ApiOperation(value = "得到随机字符")
     public String randomStr(int n) {
-        String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        String str1 = "1234567890";
         String str2 = "";
         int len = str1.length() - 1;
         double r;
@@ -207,12 +184,7 @@ public class CreateVerifyCode {
         return str2;
     }
 
-    /**
-     * 得到随机颜色
-     * @param fc
-     * @param bc
-     * @return
-     */
+    @ApiOperation(value = "得到随机颜色")
     private Color getRandColor(int fc, int bc) {
         // 给定范围获得随机颜色
         if (fc > 255){
@@ -227,9 +199,7 @@ public class CreateVerifyCode {
         return new Color(r, g, b);
     }
 
-    /**
-     * 产生随机字体
-     */
+    @ApiOperation(value = "产生随机字体")
     private Font getFont(int size) {
         Random random = new Random();
         Font[] font = new Font[5];
@@ -241,20 +211,17 @@ public class CreateVerifyCode {
         return font[random.nextInt(5)];
     }
 
-    // 扭曲方法
+    @ApiOperation(value = "扭曲方法")
     private void shear(Graphics g, int w1, int h1, Color color) {
         shearX(g, w1, h1, color);
         shearY(g, w1, h1, color);
     }
 
     private void shearX(Graphics g, int w1, int h1, Color color) {
-
         int period = random.nextInt(2);
-
         boolean borderGap = true;
         int frames = 1;
         int phase = random.nextInt(2);
-
         for (int i = 0; i < h1; i++) {
             double d = (double) (period >> 1)
                     * Math.sin((double) i / (double) period
@@ -271,10 +238,7 @@ public class CreateVerifyCode {
     }
 
     private void shearY(Graphics g, int w1, int h1, Color color) {
-
-        // 50
         int period = random.nextInt(40) + 10;
-
         boolean borderGap = true;
         int frames = 20;
         int phase = 7;
@@ -289,9 +253,7 @@ public class CreateVerifyCode {
                 g.drawLine(i, (int) d, i, 0);
                 g.drawLine(i, (int) d + h1, i, h1);
             }
-
         }
-
     }
 
     public void write(OutputStream sos) throws IOException {

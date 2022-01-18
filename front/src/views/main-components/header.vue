@@ -2,7 +2,7 @@
   <div>
     <Row class="header">
       <img src="../../assets/logo-white.png" width="220px">
-      <div class="description">医院门诊预约挂号管理系统</div>
+      <div class="description">基于Vue的医院门诊预约挂号管理系统</div>
     </Row>
   </div>
 </template>

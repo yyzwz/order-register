@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @RestController
-@Api(description = "Redis缓存管理接口")
+@Api(tags = "Redis缓存管理接口")
 @RequestMapping("/zwz/redis")
 @Transactional
 public class RedisController {

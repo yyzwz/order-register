@@ -1,6 +1,7 @@
 package cn.zwz.modules.doctor.entity;
 
 import cn.zwz.base.ZwzBaseEntity;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModel;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 
 /**
@@ -60,4 +62,9 @@ public class Doctor extends ZwzBaseEntity {
 
     @ApiModelProperty(value = "挂号费用")
     private BigDecimal orderMoney;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "是否当日")
+    private String noeDate;
 }

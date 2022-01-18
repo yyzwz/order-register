@@ -2,7 +2,6 @@ package cn.zwz.modules.file.controller;
 
 import cn.zwz.common.constant.CommonConstant;
 import cn.zwz.common.constant.SettingConstant;
-import cn.zwz.common.exception.LimitException;
 import cn.zwz.common.limit.RedisRaterLimiter;
 import cn.zwz.common.utils.*;
 import cn.zwz.modules.base.entity.Setting;
@@ -16,7 +15,6 @@ import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -28,18 +26,11 @@ import java.io.InputStream;
 /**
  * @author 郑为中
  */
-@Slf4j
 @RestController
-@Api(description = "文件上传接口")
+@Api(tags = "文件上传")
 @RequestMapping("/zwz/upload")
 @Transactional
 public class UploadController {
-
-    @Autowired
-    private RedisRaterLimiter redisRaterLimiter;
-
-    @Autowired
-    private IpInfoUtil ipInfoUtil;
 
     @Autowired
     private FileManageFactory fileManageFactory;
@@ -52,23 +43,12 @@ public class UploadController {
 
     @RequestMapping(value = "/file", method = RequestMethod.POST)
     @ApiOperation(value = "文件上传")
-    public Result<Object> upload(@RequestParam(required = false) MultipartFile file,
-                                 @RequestParam(required = false) String base64,
-                                 HttpServletRequest request) {
-
+    public Result<Object> upload(@RequestParam(required = false) MultipartFile file,@RequestParam(required = false) String base64,HttpServletRequest request) {
         Setting setting = settingService.get(SettingConstant.OSS_USED);
         if(setting==null|| StrUtil.isBlank(setting.getValue())){
-            return ResultUtil.error(501, "您还未配置OSS存储服务");
+            return ResultUtil.error(501, "未配置系统文件存储位置");
         }
-
-        // IP限流 在线Demo所需 5分钟限1个请求
-        String token = redisRaterLimiter.acquireToken("upload:"+ipInfoUtil.getIpAddr(request), 1, 300000L);
-        if (StrUtil.isBlank(token)) {
-            throw new LimitException("上传那么多干嘛，等等再传吧");
-        }
-
         if(StrUtil.isNotBlank(base64)){
-            // base64上传
             file = Base64DecodeMultipartFile.base64Convert(base64);
         }
         String result = "";
@@ -76,10 +56,8 @@ public class UploadController {
         File f = new File();
         try {
             InputStream inputStream = file.getInputStream();
-            // 上传至第三方云服务或服务器
             result = fileManageFactory.getFileManage(null).inputStreamUpload(inputStream, fKey, file);
             f.setLocation(getType(setting.getValue()));
-            // 保存数据信息至数据库
             f.setName(file.getOriginalFilename());
             f.setSize(file.getSize());
             f.setType(file.getContentType());
@@ -87,7 +65,6 @@ public class UploadController {
             f.setUrl(result);
             fileService.save(f);
         } catch (Exception e) {
-            log.error(e.toString());
             return ResultUtil.error(e.toString());
         }
         if(setting.getValue().equals(SettingConstant.LOCAL_OSS)){

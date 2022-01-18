@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @RestController
-@Api(description = "菜单/权限管理接口")
+@Api(tags = "菜单/权限管理接口")
 @RequestMapping("/zwz/permission")
 @CacheConfig(cacheNames = "permission")
 @Transactional

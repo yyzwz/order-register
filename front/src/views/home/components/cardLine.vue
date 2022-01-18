@@ -2,7 +2,7 @@
   <div>
     <Card class="card-line">
       <div class="card-header">
-        <span class="title">申请专利</span>
+        <span class="title">学术论文</span>
         <Dropdown trigger="click">
           <Icon type="ios-more" size="22" style="cursor: pointer" />
           <DropdownMenu slot="list">
@@ -16,7 +16,7 @@
       </div>
       <apexchart type="bar" height="45" :options="chartOptions" :series="series" />
       <div class="today">
-        <span class="t">公司申请专利</span>
+        <span class="t">医生发表论文</span>
         <span class="v">1688</span>
       </div>
     </Card>

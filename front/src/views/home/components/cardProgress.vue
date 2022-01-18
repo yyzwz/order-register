@@ -2,7 +2,7 @@
   <div>
     <Card class="card-progress-count">
       <div class="card-header">
-        <span class="title">加盟店数量</span>
+        <span class="title">科室数量</span>
         <Dropdown trigger="click">
           <Icon type="ios-more" size="22" style="cursor: pointer" />
           <DropdownMenu slot="list">
@@ -16,8 +16,8 @@
       </div>
       <Progress :percent="65" status="success" hide-info style="margin:20px 0 7px 0;" />
       <div class="today">
-        <span class="t">总加盟店数</span>
-        <span class="v">18168</span>
+        <span class="t">科室数量</span>
+        <span class="v">18</span>
       </div>
     </Card>
   </div>
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     init() {
-      new CountUp("countup4", 18168).start();
+      new CountUp("countup4", 18).start();
     }
   },
   mounted() {

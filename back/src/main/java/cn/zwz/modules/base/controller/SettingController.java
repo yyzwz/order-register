@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@Api(description = "基本配置接口")
+@Api(tags = "基本配置接口")
 @RequestMapping("/zwz/setting")
 public class SettingController {
 

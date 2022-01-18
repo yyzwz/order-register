@@ -1,7 +1,7 @@
 <template>
   <div class="card-bubble">
     <Card>
-      <p slot="title" class="card-title">销量分析</p>
+      <p slot="title" class="card-title">挂号分析</p>
       <div slot="extra">
         <DatePicker type="year" placeholder="选择查看的年份" style="width: 220px"></DatePicker>
       </div>
@@ -11,7 +11,7 @@
         </div>
         <Row class="row">
           <Col span="8" class="text">
-            <h6 class>距离目标</h6>
+            <h6 class>同比昨日</h6>
             <h3>
               <Icon type="ios-arrow-round-up" size="28" color="#23b397" />645
             </h3>
@@ -93,28 +93,28 @@ export default {
     init() {
       this.series = [
         {
-          name: "分公司A",
+          name: "科室A",
           data: this.generateData(new Date().getTime(), 20, {
             min: 10,
             max: 60
           })
         },
         {
-          name: "分公司B",
+          name: "科室B",
           data: this.generateData(new Date().getTime(), 20, {
             min: 10,
             max: 60
           })
         },
         {
-          name: "分公司C",
+          name: "科室C",
           data: this.generateData(new Date().getTime(), 20, {
             min: 10,
             max: 60
           })
         },
         {
-          name: "分公司D",
+          name: "科室D",
           data: this.generateData(new Date().getTime(), 20, {
             min: 10,
             max: 60

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@Api(description = "mybatis用户接口")
+@Api(tags = "mybatis用户接口")
 @RequestMapping("/zwz/myUser")
 @Transactional
 public class MyUserController {

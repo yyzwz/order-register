@@ -13,7 +13,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +22,8 @@ import java.util.List;
 /**
  * @author 郑为中
  */
-@Slf4j
 @RestController
-@Api(description = "医生排班管理接口")
+@Api(tags = "医生排班管理")
 @RequestMapping("/zwz/doctorScheduling")
 @Transactional
 public class DoctorSchedulingController {
@@ -41,10 +39,10 @@ public class DoctorSchedulingController {
     public Result<Object> addNumber(@RequestParam String doctorId,@RequestParam String date,@RequestParam int step,@RequestParam int number){
         Doctor doctor = iDoctorService.getById(doctorId);
         if(doctor == null) {
-            return new ResultUtil<Object>().setErrorMsg("医生不存在");
+            return ResultUtil.error("医生不存在");
         }
         if(number < 1) {
-            return new ResultUtil<Object>().setErrorMsg("放号数必须大于0");
+            return ResultUtil.error("放号数必须大于0");
         }
         for(int i = 1 ; i <= number; i ++) {
             DoctorScheduling ds = new DoctorScheduling();
@@ -56,27 +54,23 @@ public class DoctorSchedulingController {
             ds.setOrderFlag(0);
             iDoctorSchedulingService.saveOrUpdate(ds);
         }
-        return new ResultUtil<Object>().setSuccessMsg("放号成功");
+        return ResultUtil.success("放号成功");
     }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "通过id获取")
+    @ApiOperation(value = "查询单个医生排班")
     public Result<DoctorScheduling> get(@PathVariable String id){
-
-        DoctorScheduling doctorScheduling = iDoctorSchedulingService.getById(id);
-        return new ResultUtil<DoctorScheduling>().setData(doctorScheduling);
+        return new ResultUtil<DoctorScheduling>().setData(iDoctorSchedulingService.getById(id));
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部数据")
+    @ApiOperation(value = "查询所有医生排班")
     public Result<List<DoctorScheduling>> getAll(){
-
-        List<DoctorScheduling> list = iDoctorSchedulingService.list();
-        return new ResultUtil<List<DoctorScheduling>>().setData(list);
+        return new ResultUtil<List<DoctorScheduling>>().setData(iDoctorSchedulingService.list());
     }
 
     @RequestMapping(value = "/getByPage", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取")
+    @ApiOperation(value = "查询医生排班")
     public Result<IPage<DoctorScheduling>> getByPage(@ModelAttribute DoctorScheduling scheduling,@ModelAttribute PageVo page){
         QueryWrapper<DoctorScheduling> qw = new QueryWrapper<>();
         if(!ZwzNullUtils.isNull(scheduling.getDoctorId())) {
@@ -90,27 +84,24 @@ public class DoctorSchedulingController {
         } else if(scheduling.getStep().equals("1")) {
             qw.eq("step","1");
         }
-        IPage<DoctorScheduling> data = iDoctorSchedulingService.page(PageUtil.initMpPage(page),qw);
-        return new ResultUtil<IPage<DoctorScheduling>>().setData(data);
+        return new ResultUtil<IPage<DoctorScheduling>>().setData(iDoctorSchedulingService.page(PageUtil.initMpPage(page),qw));
     }
 
     @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
-    @ApiOperation(value = "编辑或更新数据")
+    @ApiOperation(value = "增改医生排班")
     public Result<DoctorScheduling> saveOrUpdate(DoctorScheduling doctorScheduling){
-
         if(iDoctorSchedulingService.saveOrUpdate(doctorScheduling)){
             return new ResultUtil<DoctorScheduling>().setData(doctorScheduling);
         }
-        return new ResultUtil<DoctorScheduling>().setErrorMsg("操作失败");
+        return ResultUtil.error();
     }
 
     @RequestMapping(value = "/delByIds", method = RequestMethod.POST)
-    @ApiOperation(value = "批量通过id删除")
+    @ApiOperation(value = "删除医生排班")
     public Result<Object> delAllByIds(@RequestParam String[] ids){
-
         for(String id : ids){
             iDoctorSchedulingService.removeById(id);
         }
-        return ResultUtil.success("批量通过id删除数据成功");
+        return ResultUtil.success();
     }
 }

@@ -29,7 +29,7 @@ import java.util.*;
  */
 @Slf4j
 @RestController
-@Api(description = "Vue代码生成")
+@Api(tags = "Vue代码生成")
 @RequestMapping(value = "/zwz/generate")
 public class ZwzVueGenerator {
 

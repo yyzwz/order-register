@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `t_dict_data` (
   KEY `sort_order` (`sort_order`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  order.t_dict_data 的数据：~32 rows (大约)
+-- 正在导出表  order.t_dict_data 的数据：~35 rows (大约)
 DELETE FROM `t_dict_data`;
 /*!40000 ALTER TABLE `t_dict_data` DISABLE KEYS */;
 INSERT INTO `t_dict_data` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `description`, `dict_id`, `sort_order`, `status`, `title`, `value`) VALUES
@@ -167,23 +167,23 @@ INSERT INTO `t_dict_data` (`id`, `create_by`, `create_time`, `del_flag`, `update
 -- 导出  表 order.t_doctor 结构
 DROP TABLE IF EXISTS `t_doctor`;
 CREATE TABLE IF NOT EXISTS `t_doctor` (
-  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
-  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `create_time` datetime(6) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
-  `about` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `about` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `age` int NOT NULL,
-  `doctor_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `education` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `major` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `post_level` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `subject_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `subject_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `university` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `work_date` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `photo` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `doctor_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `education` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `major` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `post_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `subject_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `subject_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `university` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `work_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `photo` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `order_money` decimal(19,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
@@ -207,29 +207,29 @@ INSERT INTO `t_doctor` (`id`, `create_by`, `create_time`, `del_flag`, `update_by
 -- 导出  表 order.t_doctor_scheduling 结构
 DROP TABLE IF EXISTS `t_doctor_scheduling`;
 CREATE TABLE IF NOT EXISTS `t_doctor_scheduling` (
-  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
-  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `create_time` datetime(6) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
-  `date` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `doctor_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `doctor_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `number` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `step` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `doctor_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `doctor_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `number` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `step` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `order_flag` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
 
--- 正在导出表  order.t_doctor_scheduling 的数据：~10 rows (大约)
+-- 正在导出表  order.t_doctor_scheduling 的数据：~15 rows (大约)
 DELETE FROM `t_doctor_scheduling`;
 /*!40000 ALTER TABLE `t_doctor_scheduling` DISABLE KEYS */;
 INSERT INTO `t_doctor_scheduling` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `date`, `doctor_id`, `doctor_name`, `number`, `step`, `order_flag`) VALUES
 	('1474252424544915456', 'admin', '2021-12-24 13:35:42.965000', 0, 'admin', '2021-12-24 15:39:27.698000', '2021-12-24', '1474212301312757761', '罗文文', '1', '0', 1),
 	('1474252424599441408', 'admin', '2021-12-24 13:35:42.968000', 0, 'admin', '2021-12-25 08:56:39.541000', '2021-12-24', '1474212301312757761', '罗文文', '2', '0', 1),
 	('1474252424612024320', 'admin', '2021-12-24 13:35:42.972000', 0, NULL, NULL, '2021-12-24', '1474212301312757761', '罗文文', '3', '0', 0),
-	('1474252424624607232', 'admin', '2021-12-24 13:35:42.974000', 0, NULL, NULL, '2021-12-24', '1474212301312757761', '罗文文', '4', '0', 0),
+	('1474252424624607232', 'admin', '2021-12-24 13:35:42.974000', 0, 'admin', '2022-01-18 11:53:34.730000', '2021-12-24', '1474212301312757761', '罗文文', '4', '0', 1),
 	('1474252424632995840', 'admin', '2021-12-24 13:35:42.977000', 0, NULL, NULL, '2021-12-24', '1474212301312757761', '罗文文', '5', '0', 0),
 	('1474252424645578752', 'admin', '2021-12-24 13:35:42.979000', 0, NULL, NULL, '2021-12-24', '1474212301312757761', '罗文文', '6', '0', 0),
 	('1474252424653967360', 'admin', '2021-12-24 13:35:42.982000', 0, NULL, NULL, '2021-12-24', '1474212301312757761', '罗文文', '7', '0', 0),
@@ -240,7 +240,12 @@ INSERT INTO `t_doctor_scheduling` (`id`, `create_by`, `create_time`, `del_flag`,
 	('1474274354534682624', 'admin', '2021-12-24 15:02:51.472000', 0, NULL, NULL, '2021-12-24', '1474212105635893249', '秦月花', '2', '1', 0),
 	('1474274354543071232', 'admin', '2021-12-24 15:02:51.474000', 0, NULL, NULL, '2021-12-24', '1474212105635893249', '秦月花', '3', '1', 0),
 	('1474274354551459840', 'admin', '2021-12-24 15:02:51.476000', 0, NULL, NULL, '2021-12-24', '1474212105635893249', '秦月花', '4', '1', 0),
-	('1474274354559848448', 'admin', '2021-12-24 15:02:51.479000', 0, NULL, NULL, '2021-12-24', '1474212105635893249', '秦月花', '5', '1', 0);
+	('1474274354559848448', 'admin', '2021-12-24 15:02:51.479000', 0, NULL, NULL, '2021-12-24', '1474212105635893249', '秦月花', '5', '1', 0),
+	('1483283178180448256', 'admin', '2022-01-18 11:40:42.426000', 0, NULL, NULL, '2022-01-18', '1474212301312757761', '罗文文', '1', '0', 0),
+	('1483283178289500160', 'admin', '2022-01-18 11:40:42.433000', 0, NULL, NULL, '2022-01-18', '1474212301312757761', '罗文文', '2', '0', 0),
+	('1483283178314665984', 'admin', '2022-01-18 11:40:42.439000', 0, NULL, NULL, '2022-01-18', '1474212301312757761', '罗文文', '3', '0', 0),
+	('1483283178335637504', 'admin', '2022-01-18 11:40:42.444000', 0, NULL, NULL, '2022-01-18', '1474212301312757761', '罗文文', '4', '0', 0),
+	('1483283178360803328', 'admin', '2022-01-18 11:40:42.450000', 0, NULL, NULL, '2022-01-18', '1474212301312757761', '罗文文', '5', '0', 0);
 /*!40000 ALTER TABLE `t_doctor_scheduling` ENABLE KEYS */;
 
 -- 导出  表 order.t_file 结构
@@ -272,40 +277,40 @@ INSERT INTO `t_file` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`,
 -- 导出  表 order.t_hospital_news 结构
 DROP TABLE IF EXISTS `t_hospital_news`;
 CREATE TABLE IF NOT EXISTS `t_hospital_news` (
-  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
-  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `create_time` datetime(6) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
-  `department_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `department_title` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `is_public` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `is_top` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `department_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `department_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `is_public` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `is_top` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `n_sort` int DEFAULT NULL,
-  `new_describe` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `new_title` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `nursing_organization_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `nursing_organization_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `period_time` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `photo` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `relate_service_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `relate_service_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `new_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `new_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `nursing_organization_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `nursing_organization_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `period_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `photo` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `relate_service_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `relate_service_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
 
--- 正在导出表  order.t_hospital_news 的数据：~9 rows (大约)
+-- 正在导出表  order.t_hospital_news 的数据：~10 rows (大约)
 DELETE FROM `t_hospital_news`;
 /*!40000 ALTER TABLE `t_hospital_news` DISABLE KEYS */;
 INSERT INTO `t_hospital_news` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `department_id`, `department_title`, `is_public`, `is_top`, `n_sort`, `new_describe`, `new_title`, `nursing_organization_id`, `nursing_organization_name`, `period_time`, `photo`, `relate_service_id`, `relate_service_name`) VALUES
-	('1471384104523141121', 'lc_lgj', '2021-12-16 15:38:02.181000', 0, NULL, NULL, '', '', 'yes', '', 300, '鹿城区-动态咨询', '鹿城区-动态咨询', '1451359273400537089', '鹿城区', '2021-12-08 00:00:00 - 2022-01-22 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1464488676275916800', '', ''),
-	('1471393441362612225', 'test_lo', '2021-12-16 16:15:08.265000', 0, NULL, NULL, '', '', 'yes', '', 100, '菱藕社区-动态', '菱藕社区-动态', '1434525343615684609', '菱藕社区', '2021-12-06 00:00:00 - 2022-01-20 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1464490047234510849', '', ''),
-	('1471398754098745345', 'test_nf', '2021-12-16 16:36:14.949000', 0, 'admin', '2021-12-24 23:32:36.806000', '', '', 'yes', 'no', 100, '松台街道-动态', '松台街道-动态', '1470021528195305472', '松台街道_第三方养老机构', '2021-12-07 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1464500645229891584', '', ''),
-	('1471442629454598144', 'test_gg', '2021-12-16 19:30:35.623000', 0, 'test_gg', '2021-12-17 08:51:30.365000', '', '', 'yes', 'yes', 100, '桂柑社区-动态', '桂柑社区-动态', '1434525517255675905', '桂柑社区', '2021-12-16 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1465143010978304000', '', ''),
-	('1471645556723027968', 'test_qnf', '2021-12-17 08:56:57.000000', 0, 'test_nf', '2021-12-17 11:24:00.081000', '', '', 'yes', 'yes', 100, '庆年坊社区-玻璃清洗', '庆年坊社区-玻璃清洗', '1434525684193169409', '庆年坊社区', '2021-12-17 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1471682488416997377', '', ''),
-	('1471645650692214785', 'test_qnf', '2021-12-17 08:57:19.000000', 0, 'admin', '2021-12-18 14:01:14.417000', '', '', 'yes', 'yes', 100, '庆年坊社区-免费鸡蛋', '庆年坊社区-免费鸡蛋', '1434525684193169409', '庆年坊社区', '2021-12-06 00:00:00 - 2022-01-28 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1471682314084945920', '', ''),
-	('1471723157265190912', 'test_lo_lrst', '2021-12-17 14:05:18.659000', 0, 'test_lo_lrst', '2021-12-17 14:08:15.025000', '', '', 'yes', 'yes', 100, '菱藕社区老人食堂-免费馒头', '菱藕社区老人食堂-免费馒头', '1471689451628531713', '菱藕社区-老人食堂', '2021-12-17 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1471723151699349505', '', ''),
-	('1472087542533853185', 'test_laj', '2021-12-18 14:13:14.887000', 0, 'admin', '2021-12-24 23:32:41.337000', '', '', 'yes', 'yes', 100, '鹿城区老干局-赏花', '鹿城区老干局-赏花', '1472086307860779009', '鹿城区老干局', '2021-12-18 00:00:00 - 2022-01-29 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1472087485180940289', '', ''),
+	('1471384104523141121', 'lc_lgj', '2021-12-16 15:38:02.181000', 0, NULL, NULL, '', '', 'yes', '', 300, '内科-动态咨询', '内科-动态咨询', '1451359273400537089', '鹿城区', '2021-12-08 00:00:00 - 2022-01-22 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1464488676275916800', '', ''),
+	('1471393441362612225', 'test_lo', '2021-12-16 16:15:08.265000', 0, NULL, NULL, '', '', 'yes', '', 100, '口腔科-动态', '口腔科-动态', '1434525343615684609', '菱藕社区', '2021-12-06 00:00:00 - 2022-01-20 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1464490047234510849', '', ''),
+	('1471398754098745345', 'test_nf', '2021-12-16 16:36:14.949000', 0, 'admin', '2021-12-24 23:32:36.806000', '', '', 'yes', 'no', 100, '外科-动态', '外科-动态', '1470021528195305472', '松台街道_第三方养老机构', '2021-12-07 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1464500645229891584', '', ''),
+	('1471442629454598144', 'test_gg', '2021-12-16 19:30:35.623000', 0, 'test_gg', '2021-12-17 08:51:30.365000', '', '', 'yes', 'yes', 100, '眼科-动态', '眼科-动态', '1434525517255675905', '桂柑社区', '2021-12-16 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1465143010978304000', '', ''),
+	('1471645556723027968', 'test_qnf', '2021-12-17 08:56:57.000000', 0, 'test_nf', '2021-12-17 11:24:00.081000', '', '', 'yes', 'yes', 100, '骨科-动态', '骨科-动态', '1434525684193169409', '庆年坊社区', '2021-12-17 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1471682488416997377', '', ''),
+	('1471645650692214785', 'test_qnf', '2021-12-17 08:57:19.000000', 0, 'admin', '2021-12-18 14:01:14.417000', '', '', 'yes', 'yes', 100, '口腔预防', '口腔预防', '1434525684193169409', '庆年坊社区', '2021-12-06 00:00:00 - 2022-01-28 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1471682314084945920', '', ''),
+	('1471723157265190912', 'test_lo_lrst', '2021-12-17 14:05:18.659000', 0, 'test_lo_lrst', '2021-12-17 14:08:15.025000', '', '', 'yes', 'yes', 100, '消化内科-动态', '消化内科-动态', '1471689451628531713', '菱藕社区-老人食堂', '2021-12-17 00:00:00 - 2022-01-21 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1471723151699349505', '', ''),
+	('1472087542533853185', 'test_laj', '2021-12-18 14:13:14.887000', 0, 'admin', '2021-12-24 23:32:41.337000', '', '', 'yes', 'yes', 100, '神经外科-动态', '神经外科-动态', '1472086307860779009', '鹿城区老干局', '2021-12-18 00:00:00 - 2022-01-29 00:00:00', 'https://data.wzcable.com:9004/app/file/view/1472087485180940289', '', ''),
 	('1474551902455861249', 'qmm', '2021-12-25 09:25:44.089000', 0, NULL, NULL, '', '', 'yes', '', 300, '<p><strong>11111</strong></p><p><strong><img src="http://img.baidu.com/hi/jx2/j_0017.gif"/></strong></p>', '111', '40322777781112832', '浙江省', '2021-12-25 00:00:00 - 2022-01-21 00:00:00', '', '', ''),
 	('1474565620946309120', 'admin', '2021-12-25 10:20:14.000000', 0, 'admin', '2021-12-25 10:20:31.703000', NULL, NULL, 'yes', '', NULL, '<p><strong>测试啊啊啊</strong></p>', '测试新闻', NULL, NULL, '2021-12-17 00:00:00 - 2022-01-14 00:00:00', 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png', '', '');
 /*!40000 ALTER TABLE `t_hospital_news` ENABLE KEYS */;
@@ -313,55 +318,56 @@ INSERT INTO `t_hospital_news` (`id`, `create_by`, `create_time`, `del_flag`, `up
 -- 导出  表 order.t_hospital_order 结构
 DROP TABLE IF EXISTS `t_hospital_order`;
 CREATE TABLE IF NOT EXISTS `t_hospital_order` (
-  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
-  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `create_time` datetime(6) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
-  `date_time` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `user_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `user_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `doctor_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `doctor_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `number` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `order_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `step` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `date_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `doctor_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `doctor_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `number` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `order_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `step` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `money_data` decimal(19,2) DEFAULT NULL,
   `money_flag` int NOT NULL,
   `status` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
 
--- 正在导出表  order.t_hospital_order 的数据：~0 rows (大约)
+-- 正在导出表  order.t_hospital_order 的数据：~2 rows (大约)
 DELETE FROM `t_hospital_order`;
 /*!40000 ALTER TABLE `t_hospital_order` DISABLE KEYS */;
 INSERT INTO `t_hospital_order` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `date_time`, `user_id`, `user_name`, `doctor_id`, `doctor_name`, `number`, `order_id`, `step`, `money_data`, `money_flag`, `status`) VALUES
 	('1474283566186762240', 'admin', '2021-12-24 15:39:27.706000', 0, 'admin', '2021-12-24 16:58:34.086000', '2021-12-24', '682265633886208', '管理员', '1474212301312757761', '罗文文', '1', '1474252424544915456', '0', 15.00, 1, 1),
-	('1474544585471561728', 'admin', '2021-12-25 08:56:39.559000', 0, NULL, NULL, '2021-12-24', '682265633886208', '管理员', '1474212301312757761', '罗文文', '2', '1474252424599441408', '0', 15.00, 0, 0);
+	('1474544585471561728', 'admin', '2021-12-25 08:56:39.559000', 0, NULL, NULL, '2021-12-24', '682265633886208', '管理员', '1474212301312757761', '罗文文', '2', '1474252424599441408', '0', 15.00, 0, 0),
+	('1483286417563062272', 'admin', '2022-01-18 11:53:34.749000', 0, NULL, NULL, '2021-12-24', '682265633886208', '管理员', '1474212301312757761', '罗文文', '4', '1474252424624607232', '0', 15.00, 0, 0);
 /*!40000 ALTER TABLE `t_hospital_order` ENABLE KEYS */;
 
 -- 导出  表 order.t_hospital_subject 结构
 DROP TABLE IF EXISTS `t_hospital_subject`;
 CREATE TABLE IF NOT EXISTS `t_hospital_subject` (
-  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
-  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `create_time` datetime(6) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
   `about` varchar(1024) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
-  `duty_doctor` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `start_date` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `sub_code` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `sub_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `sub_number` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `super_number` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `duty_doctor` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `start_date` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `sub_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `sub_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `sub_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `super_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
 
--- 正在导出表  order.t_hospital_subject 的数据：~18 rows (大约)
+-- 正在导出表  order.t_hospital_subject 的数据：~20 rows (大约)
 DELETE FROM `t_hospital_subject`;
 /*!40000 ALTER TABLE `t_hospital_subject` DISABLE KEYS */;
 INSERT INTO `t_hospital_subject` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `about`, `duty_doctor`, `remark`, `start_date`, `sub_code`, `sub_name`, `sub_number`, `super_number`) VALUES
@@ -409,7 +415,7 @@ CREATE TABLE IF NOT EXISTS `t_log` (
   KEY `create_time` (`create_time`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  order.t_log 的数据：~45 rows (大约)
+-- 正在导出表  order.t_log 的数据：~51 rows (大约)
 DELETE FROM `t_log`;
 /*!40000 ALTER TABLE `t_log` DISABLE KEYS */;
 INSERT INTO `t_log` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `cost_time`, `ip`, `ip_info`, `name`, `request_param`, `request_type`, `request_url`, `username`, `log_type`) VALUES
@@ -462,23 +468,31 @@ INSERT INTO `t_log` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, 
 	(1474544551673860098, NULL, '2021-12-25 08:56:32', 0, NULL, '2021-12-25 08:56:32', 68, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"HBN8","saveLogin":"true","captchaId":"c698b27a6b2642c199f1395472f4ddd7","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
 	(1474558980763291648, NULL, '2021-12-25 09:53:52', 0, NULL, '2021-12-25 09:53:52', 78, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"GMDL","saveLogin":"true","captchaId":"d62a2d46897144a8b80144ed8fb4c0de","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
 	(1474585800845955072, NULL, '2021-12-25 11:40:26', 0, NULL, '2021-12-25 11:40:26', 81, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"QJU5","saveLogin":"true","captchaId":"2017c3e10636422aa9591a4b897a9656","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
-	(1474587119795179520, NULL, '2021-12-25 11:45:41', 0, NULL, '2021-12-25 11:45:41', 69, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"yofw","saveLogin":"true","captchaId":"0e41d23cea9444358d2744702cff0eca","username":"user1"}', 'POST', '/zwz/login', 'user1', 1);
+	(1474587119795179520, NULL, '2021-12-25 11:45:41', 0, NULL, '2021-12-25 11:45:41', 69, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"yofw","saveLogin":"true","captchaId":"0e41d23cea9444358d2744702cff0eca","username":"user1"}', 'POST', '/zwz/login', 'user1', 1),
+	(1482957074295033856, NULL, '2022-01-17 14:04:54', 0, NULL, '2022-01-17 14:04:54', 349, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"TBTR","saveLogin":"true","captchaId":"dadb3c9e82d1415281dd3da586ebfab4","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1482974124124016640, NULL, '2022-01-17 15:12:38', 0, NULL, '2022-01-17 15:12:38', 271, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"7AB6","saveLogin":"true","captchaId":"891191bef7624a5f96b9380fa373916f","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1482975879301828608, NULL, '2022-01-17 15:19:37', 0, NULL, '2022-01-17 15:19:37', 244, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"5888","saveLogin":"true","captchaId":"9bb2a67cc2f14d4898799c234b6997cb","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1483007225701208064, NULL, '2022-01-17 17:24:10', 0, NULL, '2022-01-17 17:24:10', 106, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"9694","saveLogin":"true","captchaId":"afa4bc9f5a9e4262aaf12b0ce5070f47","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1483270586183585792, NULL, '2022-01-18 10:50:40', 0, NULL, '2022-01-18 10:50:40', 243, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"1418","saveLogin":"true","captchaId":"e6a3639e11144e819ff7880af93b3d37","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1483271269842554880, NULL, '2022-01-18 10:53:23', 0, NULL, '2022-01-18 10:53:23', 70, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"9636","saveLogin":"true","captchaId":"e28271720bbd45048cf885ed4bfbadae","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1483274635188506624, NULL, '2022-01-18 11:06:46', 0, NULL, '2022-01-18 11:06:46', 113, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"1216","saveLogin":"true","captchaId":"8ef2f30bdc8e4a1cb260cc1cede43f57","username":"admin"}', 'POST', '/zwz/login', 'admin', 1),
+	(1483275694745194496, NULL, '2022-01-18 11:10:58', 0, NULL, '2022-01-18 11:10:58', 62, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"8392","saveLogin":"true","captchaId":"e0bfdb2ae1e041458073ec85815e54fc","username":"admin"}', 'POST', '/zwz/login', 'admin', 1);
 /*!40000 ALTER TABLE `t_log` ENABLE KEYS */;
 
 -- 导出  表 order.t_message_board 结构
 DROP TABLE IF EXISTS `t_message_board`;
 CREATE TABLE IF NOT EXISTS `t_message_board` (
-  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
-  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `create_time` datetime(6) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   `update_time` datetime(6) DEFAULT NULL,
-  `content` varchar(1024) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `date` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `reply_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `user_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
-  `user_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `content` varchar(1024) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `reply_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
 
@@ -487,7 +501,9 @@ DELETE FROM `t_message_board`;
 /*!40000 ALTER TABLE `t_message_board` DISABLE KEYS */;
 INSERT INTO `t_message_board` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `content`, `date`, `reply_id`, `user_id`, `user_name`) VALUES
 	('1474578672475312129', 'admin', '2021-12-25 11:12:06.000000', 0, 'admin', '2021-12-25 11:32:44.627000', '你好呀', '2021-12-25 11:12:06', '', '682265633886208', '管理员'),
-	('1474581367550513153', 'admin', '2021-12-25 11:22:49.080000', 0, NULL, NULL, '你也好', '2021-12-25 11:22:49', '1474578672475312129', '682265633886208', '管理员');
+	('1474581367550513153', 'admin', '2021-12-25 11:22:49.080000', 0, NULL, NULL, '你也好', '2021-12-25 11:22:49', '1474578672475312129', '682265633886208', '管理员'),
+	('1483304372770312193', 'admin', '2022-01-18 13:04:55.607000', 0, NULL, NULL, '这是我的留言，啦啦啦~', '2022-01-18 13:04:55', '', '682265633886208', '管理员'),
+	('1483305179439828993', 'admin', '2022-01-18 13:08:07.916000', 0, NULL, NULL, '这是我的回复哦，祝您生活愉快！', '2022-01-18 13:08:07', '1483304372770312193', '682265633886208', '管理员');
 /*!40000 ALTER TABLE `t_message_board` ENABLE KEYS */;
 
 -- 导出  表 order.t_permission 结构
@@ -516,7 +532,7 @@ CREATE TABLE IF NOT EXISTS `t_permission` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  order.t_permission 的数据：~56 rows (大约)
+-- 正在导出表  order.t_permission 的数据：~69 rows (大约)
 DELETE FROM `t_permission`;
 /*!40000 ALTER TABLE `t_permission` DISABLE KEYS */;
 INSERT INTO `t_permission` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `description`, `name`, `parent_id`, `type`, `sort_order`, `component`, `path`, `title`, `icon`, `level`, `button_type`, `status`, `url`, `show_always`) VALUES
@@ -629,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `t_role_permission` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  order.t_role_permission 的数据：~61 rows (大约)
+-- 正在导出表  order.t_role_permission 的数据：~78 rows (大约)
 DELETE FROM `t_role_permission`;
 /*!40000 ALTER TABLE `t_role_permission` DISABLE KEYS */;
 INSERT INTO `t_role_permission` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `permission_id`, `role_id`) VALUES
@@ -766,7 +782,7 @@ CREATE TABLE IF NOT EXISTS `t_user` (
   KEY `create_time` (`create_time`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  order.t_user 的数据：~0 rows (大约)
+-- 正在导出表  order.t_user 的数据：~2 rows (大约)
 DELETE FROM `t_user`;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
 INSERT INTO `t_user` (`id`, `create_by`, `create_time`, `update_by`, `update_time`, `address`, `avatar`, `description`, `email`, `mobile`, `nickname`, `password`, `sex`, `status`, `type`, `username`, `del_flag`, `department_id`, `street`, `pass_strength`, `department_title`, `birth`) VALUES
@@ -788,7 +804,7 @@ CREATE TABLE IF NOT EXISTS `t_user_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- 正在导出表  order.t_user_role 的数据：~0 rows (大约)
+-- 正在导出表  order.t_user_role 的数据：~2 rows (大约)
 DELETE FROM `t_user_role`;
 /*!40000 ALTER TABLE `t_user_role` DISABLE KEYS */;
 INSERT INTO `t_user_role` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `role_id`, `user_id`) VALUES

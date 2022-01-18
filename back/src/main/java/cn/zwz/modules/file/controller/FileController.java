@@ -7,6 +7,7 @@ import cn.zwz.common.utils.*;
 import cn.zwz.modules.base.entity.User;
 import cn.zwz.modules.base.service.SettingService;
 import cn.zwz.modules.base.service.UserService;
+import cn.zwz.modules.base.utils.ZwzNullUtils;
 import cn.zwz.modules.base.vo.OssSetting;
 import cn.zwz.common.vo.PageVo;
 import cn.zwz.common.vo.Result;
@@ -19,7 +20,6 @@ import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -34,13 +34,11 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * @author 郑为中
  */
-@Slf4j
 @Controller
-@Api(description = "文件管理管理接口")
+@Api(tags = "文件管理")
 @RequestMapping("/zwz/file")
 @Transactional
 public class FileController {
@@ -61,12 +59,9 @@ public class FileController {
     private EntityManager entityManager;
 
     @RequestMapping(value = "/getByCondition", method = RequestMethod.GET)
-    @ApiOperation(value = "多条件分页获取")
+    @ApiOperation(value = "查询我的文件列表")
     @ResponseBody
-    public Result<Page<File>> getFileList(File file,
-                                          SearchVo searchVo,
-                                          PageVo pageVo){
-
+    public Result<Page<File>> getFileList(File file,SearchVo searchVo,PageVo pageVo){
         Page<File> page = fileService.findByCondition(file, searchVo, PageUtil.initPage(pageVo));
         OssSetting os = new Gson().fromJson(settingService.get(SettingConstant.LOCAL_OSS).getValue(), OssSetting.class);
         Map<String, String> map = new HashMap<>(16);
@@ -76,7 +71,7 @@ public class FileController {
                 entityManager.detach(e);
                 e.setUrl(url + e.getId());
             }
-            if (StrUtil.isNotBlank(e.getCreateBy())) {
+            if (!ZwzNullUtils.isNull(e.getCreateBy())) {
                 if (!map.containsKey(e.getCreateBy())) {
                     User u = userService.findByUsername(e.getCreateBy());
                     if (u != null) {
@@ -88,30 +83,21 @@ public class FileController {
                 }
             }
         }
-        // GC
-        map = null;
         return new ResultUtil<Page<File>>().setData(page);
     }
 
     @RequestMapping(value = "/copy", method = RequestMethod.POST)
     @ApiOperation(value = "文件复制")
     @ResponseBody
-    public Result<Object> copy(@RequestParam String id,
-                               @RequestParam String key) throws Exception {
-
+    public Result<Object> copy(@RequestParam String id,@RequestParam String key) throws Exception {
         File file = fileService.get(id);
         if(file.getLocation()==null){
             return ResultUtil.error("存储位置未知");
         }
-
         String toKey = "副本_" + key;
-        // 特殊处理本地服务器
-        if(CommonConstant.OSS_LOCAL.equals(file.getLocation())){
-            key = file.getUrl();
-        }
+        key = file.getUrl();
         String newUrl = fileManageFactory.getFileManage(file.getLocation()).copyFile(key, toKey);
-        File newFile = new File().setName(file.getName()).setFKey(toKey).setSize(file.getSize()).setType(file.getType())
-                .setLocation(file.getLocation()).setUrl(newUrl);
+        File newFile = new File().setName(file.getName()).setFKey(toKey).setSize(file.getSize()).setType(file.getType()).setLocation(file.getLocation()).setUrl(newUrl);
         fileService.save(newFile);
         return ResultUtil.data(null);
     }
@@ -119,20 +105,14 @@ public class FileController {
     @RequestMapping(value = "/rename", method = RequestMethod.POST)
     @ApiOperation(value = "文件重命名")
     @ResponseBody
-    public Result<Object> upload(@RequestParam String id,
-                                 @RequestParam String newKey,
-                                 @RequestParam String newName) throws Exception {
-
+    public Result<Object> upload(@RequestParam String id,@RequestParam String newKey,@RequestParam String newName) throws Exception {
         File file = fileService.get(id);
         if(file.getLocation()==null){
             return ResultUtil.error("存储位置未知");
         }
         String newUrl = "", oldKey = file.getFKey();
         if(!oldKey.equals(newKey)){
-            // 特殊处理本地服务器
-            if(CommonConstant.OSS_LOCAL.equals(file.getLocation())){
-                oldKey = file.getUrl();
-            }
+            oldKey = file.getUrl();
             newUrl = fileManageFactory.getFileManage(file.getLocation()).renameFile(oldKey, newKey);
         }
         file.setName(newName);
@@ -155,10 +135,7 @@ public class FileController {
                 return ResultUtil.error("存储位置未知");
             }
             // 特殊处理本地服务器
-            String key = file.getFKey();
-            if(CommonConstant.OSS_LOCAL.equals(file.getLocation())){
-                key = file.getUrl();
-            }
+            String key = file.getUrl();
             fileManageFactory.getFileManage(file.getLocation()).deleteFile(key);
             fileService.delete(id);
         }
@@ -167,11 +144,7 @@ public class FileController {
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "本地存储预览文件")
-    public void view(@PathVariable String id,
-                     @RequestParam(required = false) String filename,
-                     @RequestParam(required = false, defaultValue = "false") Boolean preview,
-                     HttpServletResponse response) throws IOException {
-
+    public void view(@PathVariable String id,@RequestParam(required = false) String filename,@RequestParam(required = false, defaultValue = "false") Boolean preview,HttpServletResponse response) throws IOException {
         File file = fileService.get(id);
         if(file==null){
             throw new ZwzException("文件ID："+id+"不存在");
@@ -179,7 +152,6 @@ public class FileController {
         if(StrUtil.isBlank(filename)){
             filename =  file.getFKey();
         }
-
         if(!preview){
             response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(filename, "UTF-8"));
         }

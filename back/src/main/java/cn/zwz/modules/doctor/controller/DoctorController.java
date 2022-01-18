@@ -1,5 +1,6 @@
 package cn.zwz.modules.doctor.controller;
 
+import cn.hutool.core.date.DateUtil;
 import cn.zwz.common.utils.PageUtil;
 import cn.zwz.common.utils.ResultUtil;
 import cn.zwz.common.vo.PageVo;
@@ -7,12 +8,10 @@ import cn.zwz.common.vo.Result;
 import cn.zwz.modules.base.utils.ZwzNullUtils;
 import cn.zwz.modules.doctor.entity.Doctor;
 import cn.zwz.modules.doctor.service.IDoctorService;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +22,8 @@ import java.util.Objects;
 /**
  * @author 郑为中
  */
-@Slf4j
 @RestController
-@Api(description = "医生管理接口")
+@Api(tags = "医生管理")
 @RequestMapping("/zwz/doctor")
 @Transactional
 public class DoctorController {
@@ -34,55 +32,51 @@ public class DoctorController {
     private IDoctorService iDoctorService;
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "通过id获取")
+    @ApiOperation(value = "查询单个医生")
     public Result<Doctor> get(@PathVariable String id){
-
-        Doctor doctor = iDoctorService.getById(id);
-        return new ResultUtil<Doctor>().setData(doctor);
+        return new ResultUtil<Doctor>().setData(iDoctorService.getById(id));
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部数据")
+    @ApiOperation(value = "查询所有医生")
     public Result<List<Doctor>> getAll(){
-
-        List<Doctor> list = iDoctorService.list();
-        return new ResultUtil<List<Doctor>>().setData(list);
+        return new ResultUtil<List<Doctor>>().setData(iDoctorService.list());
     }
 
     @RequestMapping(value = "/getByPage", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取")
+    @ApiOperation(value = "查询医生")
     public Result<IPage<Doctor>> getByPage(@ModelAttribute Doctor doctor,@ModelAttribute PageVo page){
         QueryWrapper<Doctor> qw = new QueryWrapper<>();
-        if(doctor.getDoctorName() != null && !ZwzNullUtils.isNull(doctor.getDoctorName())) {
+        if(!ZwzNullUtils.isNull(doctor.getDoctorName())) {
             qw.like("doctor_name",doctor.getDoctorName());
         }
-        if(doctor.getPostLevel() != null && !ZwzNullUtils.isNull(doctor.getPostLevel())) {
+        if(!ZwzNullUtils.isNull(doctor.getPostLevel())) {
             qw.eq("post_level",doctor.getPostLevel());
         }
-        if(doctor.getSubjectId() != null && !ZwzNullUtils.isNull(doctor.getSubjectId())) {
+        if(!ZwzNullUtils.isNull(doctor.getSubjectId())) {
             qw.eq("subject_id",doctor.getSubjectId());
         }
-        IPage<Doctor> data = iDoctorService.page(PageUtil.initMpPage(page),qw);
-        return new ResultUtil<IPage<Doctor>>().setData(data);
+        if(!ZwzNullUtils.isNull(doctor.getNoeDate()) && Objects.equals(doctor.getNoeDate(),"是")) {
+            qw.inSql("id","SELECT id FROM t_doctor WHERE id IN(SELECT DISTINCT doctor_id FROM t_doctor_scheduling WHERE DATE = '" + DateUtil.today() + "')");
+        }
+        return new ResultUtil<IPage<Doctor>>().setData(iDoctorService.page(PageUtil.initMpPage(page),qw));
     }
 
     @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
-    @ApiOperation(value = "编辑或更新数据")
+    @ApiOperation(value = "增改医生")
     public Result<Doctor> saveOrUpdate(Doctor doctor){
-
         if(iDoctorService.saveOrUpdate(doctor)){
             return new ResultUtil<Doctor>().setData(doctor);
         }
-        return new ResultUtil<Doctor>().setErrorMsg("操作失败");
+        return ResultUtil.error();
     }
 
     @RequestMapping(value = "/delByIds", method = RequestMethod.POST)
-    @ApiOperation(value = "批量通过id删除")
+    @ApiOperation(value = "删除医生")
     public Result<Object> delAllByIds(@RequestParam String[] ids){
-
         for(String id : ids){
             iDoctorService.removeById(id);
         }
-        return ResultUtil.success("批量通过id删除数据成功");
+        return ResultUtil.success();
     }
 }

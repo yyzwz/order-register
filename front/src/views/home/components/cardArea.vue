@@ -2,7 +2,7 @@
   <div>
     <Card class="card-area">
       <div class="card-header">
-        <span class="title">在职员工数</span>
+        <span class="title">医院员工数</span>
         <Dropdown trigger="click">
           <Icon type="ios-more" size="22" style="cursor: pointer" />
           <DropdownMenu slot="list">
@@ -22,7 +22,7 @@
         :series="series"
       />
       <div class="today">
-        <span class="t">在职员工数</span>
+        <span class="t">医院员工数</span>
         <span class="v"><Icon type="md-walk" />68668</span>
       </div>
     </Card>

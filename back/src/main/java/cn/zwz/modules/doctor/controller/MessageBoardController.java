@@ -9,7 +9,6 @@ import cn.zwz.modules.base.entity.User;
 import cn.zwz.modules.base.utils.ZwzNullUtils;
 import cn.zwz.modules.doctor.entity.MessageBoard;
 import cn.zwz.modules.doctor.service.IMessageBoardService;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
@@ -27,7 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@Api(description = "留言板管理接口")
+@Api(tags = "留言板管理")
 @RequestMapping("/zwz/messageBoard")
 @Transactional
 public class MessageBoardController {
@@ -39,19 +38,15 @@ public class MessageBoardController {
     private SecurityUtil securityUtil;
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "通过id获取")
+    @ApiOperation(value = "查询单个留言")
     public Result<MessageBoard> get(@PathVariable String id){
-
-        MessageBoard messageBoard = iMessageBoardService.getById(id);
-        return new ResultUtil<MessageBoard>().setData(messageBoard);
+        return new ResultUtil<MessageBoard>().setData(iMessageBoardService.getById(id));
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部数据")
+    @ApiOperation(value = "查询所有留言")
     public Result<List<MessageBoard>> getAll(){
-
-        List<MessageBoard> list = iMessageBoardService.list();
-        return new ResultUtil<List<MessageBoard>>().setData(list);
+        return new ResultUtil<List<MessageBoard>>().setData(iMessageBoardService.list());
     }
 
     @RequestMapping(value = "/getByPage", method = RequestMethod.GET)
@@ -67,15 +62,14 @@ public class MessageBoardController {
         else {
             qw.eq("reply_id",board.getReplyId());
         }
-        IPage<MessageBoard> data = iMessageBoardService.page(PageUtil.initMpPage(page),qw);
-        return new ResultUtil<IPage<MessageBoard>>().setData(data);
+        return new ResultUtil<IPage<MessageBoard>>().setData(iMessageBoardService.page(PageUtil.initMpPage(page),qw));
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增留言")
     public Result<MessageBoard> insert(@RequestParam String content){
         if(ZwzNullUtils.isNull(content)) {
-            return new ResultUtil<MessageBoard>().setErrorMsg("留言不能为空");
+            return ResultUtil.error("留言不能为空");
         }
         User currUser = securityUtil.getCurrUser();
         MessageBoard messageBoard = new MessageBoard();
@@ -87,7 +81,7 @@ public class MessageBoardController {
         if(iMessageBoardService.saveOrUpdate(messageBoard)){
             return new ResultUtil<MessageBoard>().setData(messageBoard);
         }
-        return new ResultUtil<MessageBoard>().setErrorMsg("操作失败");
+        return ResultUtil.error();
     }
 
     @RequestMapping(value = "/insertReply", method = RequestMethod.POST)
@@ -96,7 +90,7 @@ public class MessageBoardController {
         User currUser = securityUtil.getCurrUser();
         MessageBoard mb = iMessageBoardService.getById(replyId);
         if(mb == null) {
-            return new ResultUtil<MessageBoard>().setErrorMsg("回复留言已被删除");
+            return ResultUtil.error("回复留言已被删除");
         }
         MessageBoard messageBoard = new MessageBoard();
         messageBoard.setUserId(currUser.getId());
@@ -107,33 +101,28 @@ public class MessageBoardController {
         if(iMessageBoardService.saveOrUpdate(messageBoard)){
             return new ResultUtil<MessageBoard>().setData(messageBoard);
         }
-        return new ResultUtil<MessageBoard>().setErrorMsg("操作失败");
+        return ResultUtil.error();
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ApiOperation(value = "编辑留言")
     public Result<MessageBoard> update(MessageBoard messageBoard){
-
         if(iMessageBoardService.saveOrUpdate(messageBoard)){
             return new ResultUtil<MessageBoard>().setData(messageBoard);
         }
-        return new ResultUtil<MessageBoard>().setErrorMsg("操作失败");
+        return ResultUtil.error();
     }
 
     @RequestMapping(value = "/delByIds", method = RequestMethod.POST)
-    @ApiOperation(value = "批量通过id删除")
+    @ApiOperation(value = "删除留言")
     public Result<Object> delAllByIds(@RequestParam String[] ids){
-
         for(String id : ids){
             iMessageBoardService.removeById(id);
         }
-        return ResultUtil.success("批量通过id删除数据成功");
+        return ResultUtil.success();
     }
 
-    /**
-     * 获取当前完整日期时间
-     * @return
-     */
+    @ApiOperation(value = "获取当前完整日期时间")
     public static String getZwzNowTime() {
         Date date = new Date();
         int hour = date.getHours();
