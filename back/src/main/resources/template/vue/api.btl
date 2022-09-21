@@ -1,0 +1,23 @@
+import { getRequest, postRequest, putRequest, postBodyRequest, getNoAuthRequest, postNoAuthRequest } from '@/libs/axios';
+
+export const get${apiName}One = (params) => {
+    return getRequest('/${vueName}/getOne', params)
+}
+export const get${apiName}List = (params) => {
+    return getRequest('/${vueName}/getByPage', params)
+}
+export const get${apiName}Count = (params) => {
+    return getRequest('/${vueName}/count', params)
+}
+export const add${apiName} = (params) => {
+    return postRequest('/${vueName}/insert', params)
+}
+export const edit${apiName} = (params) => {
+    return postRequest('/${vueName}/update', params)
+}
+export const addOrEdit${apiName} = (params) => {
+    return postRequest('/${vueName}/insertOrUpdate', params)
+}
+export const delete${apiName} = (params) => {
+    return postRequest('/${vueName}/delByIds', params)
+}

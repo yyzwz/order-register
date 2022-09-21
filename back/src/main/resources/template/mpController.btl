@@ -1,0 +1,94 @@
+package ${entity.controllerPackage};
+
+import cn.zwz.basics.utils.PageUtil;
+import cn.zwz.basics.utils.ResultUtil;
+import cn.zwz.basics.baseVo.PageVo;
+import cn.zwz.basics.baseVo.Result;
+import cn.zwz.data.utils.ZwzNullUtils;
+import ${entity.entityPackage}.${entity.className};
+import ${entity.servicePackage}.I${entity.className}Service;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * @author ${entity.author}
+ */
+@Slf4j
+@RestController
+@Api(tags = "${entity.description}管理接口")
+@RequestMapping("/zwz/${entity.classNameLowerCase}")
+@Transactional
+public class ${entity.className}Controller {
+
+    @Autowired
+    private I${entity.className}Service i${entity.className}Service;
+
+    @RequestMapping(value = "/getOne", method = RequestMethod.GET)
+    @ApiOperation(value = "查询单条${entity.description}")
+    public Result<${entity.className}> get(@RequestParam ${entity.primaryKeyType} id){
+        return new ResultUtil<${entity.className}>().setData(i${entity.className}Service.getById(id));
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    @ApiOperation(value = "查询全部${entity.description}个数")
+    public Result<Long> getCount(){
+        return new ResultUtil<Long>().setData(i${entity.className}Service.count());
+    }
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @ApiOperation(value = "查询全部${entity.description}")
+    public Result<List<${entity.className}>> getAll(){
+        return new ResultUtil<List<${entity.className}>>().setData(i${entity.className}Service.list());
+    }
+
+    @RequestMapping(value = "/getByPage", method = RequestMethod.GET)
+    @ApiOperation(value = "查询${entity.description}")
+    public Result<IPage<${entity.className}>> getByPage(@ModelAttribute ${entity.className} ${entity.classNameLowerCase} ,@ModelAttribute PageVo page){
+        QueryWrapper<${entity.className}> qw = new QueryWrapper<>();
+        if(!ZwzNullUtils.isNull(${entity.classNameLowerCase}.getCreateBy())) {
+        }
+        IPage<${entity.className}> data = i${entity.className}Service.page(PageUtil.initMpPage(page),qw);
+        return new ResultUtil<IPage<${entity.className}>>().setData(data);
+    }
+
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ApiOperation(value = "增改${entity.description}")
+    public Result<${entity.className}> saveOrUpdate(${entity.className} ${entity.classNameLowerCase}){
+        if(i${entity.className}Service.saveOrUpdate(${entity.classNameLowerCase})){
+            return new ResultUtil<${entity.className}>().setData(${entity.classNameLowerCase});
+        }
+        return ResultUtil.error();
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @ApiOperation(value = "新增${entity.description}")
+    public Result<${entity.className}> insert(${entity.className} ${entity.classNameLowerCase}){
+        i${entity.className}Service.saveOrUpdate(${entity.classNameLowerCase});
+        return new ResultUtil<${entity.className}>().setData(${entity.classNameLowerCase});
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ApiOperation(value = "编辑${entity.description}")
+    public Result<${entity.className}> update(${entity.className} ${entity.classNameLowerCase}){
+        i${entity.className}Service.saveOrUpdate(${entity.classNameLowerCase});
+        return new ResultUtil<${entity.className}>().setData(${entity.classNameLowerCase});
+    }
+
+    @RequestMapping(value = "/delByIds", method = RequestMethod.POST)
+    @ApiOperation(value = "删除${entity.description}")
+    public Result<Object> delByIds(@RequestParam ${entity.primaryKeyType}[] ids){
+        for(${entity.primaryKeyType} id : ids){
+            i${entity.className}Service.removeById(id);
+        }
+        return ResultUtil.success();
+    }
+}

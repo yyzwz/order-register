@@ -76,8 +76,6 @@ export default {
                 "序号",
                 "科室名称",
                 "科室代码",
-                "科室人数",
-                "主任医师人数",
                 "科室介绍",
                 "成立日期",
                 "责任医生",
@@ -130,14 +128,14 @@ export default {
                 {
                     title: "科室名称",
                     key: "subName",
-                    minWidth: 120,
+                    minWidth: 150,
                     tooltip: true,
                     sortable: false,
                 },
                 {
                     title: "科室代码",
                     key: "subCode",
-                    minWidth: 120,
+                    minWidth: 90,
                     tooltip: true,
                     sortable: false,
                 },
@@ -158,14 +156,14 @@ export default {
                 {
                     title: "科室介绍",
                     key: "about",
-                    minWidth: 120,
+                    minWidth: 200,
                     tooltip: true,
                     sortable: false,
                 },
                 {
                     title: "成立日期",
                     key: "startDate",
-                    minWidth: 120,
+                    minWidth: 160,
                     tooltip: true,
                     sortable: false,
                 },
@@ -179,7 +177,7 @@ export default {
                 {
                     title: "备注",
                     key: "remark",
-                    minWidth: 120,
+                    minWidth: 200,
                     tooltip: true,
                     sortable: false,
                 },
@@ -220,6 +218,7 @@ export default {
                     key: "action",
                     align: "center",
                     width: 200,
+                    fixed: "right",
                     render: (h, params) => {
                         return h("div", [
                             h(
@@ -354,11 +353,9 @@ export default {
         remove(v) {
             this.$Modal.confirm({
                 title: "确认删除",
-                // 记得确认修改此处
-                content: "您确认要删除 " + v.name + " ?",
+                content: "您确认要删除 " + v.subName + " ?",
                 loading: true,
                 onOk: () => {
-                    // 删除
                     deleteHospitalSubject({
                         ids: v.id
                     }).then(res => {
@@ -386,7 +383,6 @@ export default {
                         ids += e.id + ",";
                     });
                     ids = ids.substring(0, ids.length - 1);
-                    // 批量删除
                     deleteHospitalSubject({
                         ids: ids
                     }).then(res => {
@@ -422,7 +418,7 @@ export default {
             for (var i = 0; i < this.mycolumns.length; i++) {
                 var item = this.mycolumns[i];
                 if (item.title == undefined) showcolumns.push(item);
-                else if (newcolumns.contains(item.title)) showcolumns.push(item);
+                else if (newcolumns.includes(item.title)) showcolumns.push(item);
             }
             this.columns = showcolumns;
         },

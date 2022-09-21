@@ -71,7 +71,7 @@
 <script>
 import VueUeditorWrap from 'vue-ueditor-wrap';
 import { addDynamic_new, getServiceByIds } from "./api.js";
-import uploadPicInput from "@/views/my-components/zwz/upload-pic-input";
+import uploadPicInput from "@/views/template/upload-pic-input";
 export default {
   name: "add",
   components: {

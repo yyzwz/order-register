@@ -3,10 +3,13 @@ import ViewUI from 'view-design';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Cookies from 'js-cookie';
-import { routers, otherRouter } from './router';
-import store from '../store';
+import { routers } from './router';
 
 Vue.use(VueRouter);
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
 
 const RouterConfig = {
     // mode: 'history',
@@ -20,7 +23,6 @@ router.beforeEach((to, from, next) => {
     Util.title(to.meta.title);
     var name = to.name;
     if (Cookies.get('locking') == '1' && name !== 'locking') {
-        // 判断当前是否是锁定状态
         next({
             replace: true,
             name: 'locking'
@@ -28,15 +30,11 @@ router.beforeEach((to, from, next) => {
     } else if (Cookies.get('locking') == '0' && name == 'locking') {
         next(false);
     } else {
-        // 白名单
-        var whiteList = name != 'login' && name != 'regist' && name != 'regist-result' && name != 'relate' && name != 'reset' && name != 'authorize';
-        if (!Cookies.get('userInfo') && whiteList) {
-            // 判断是否已经登录且前往的页面不是登录页
+        if (!Cookies.get('userInfo') && (name != 'login' && name != 'regist')) {
             next({
                 name: 'login'
             });
         } else if (Cookies.get('userInfo') && name == 'login') {
-            // 判断是否已经登录且前往的是登录页
             Util.title();
             next({
                 name: 'home_index'

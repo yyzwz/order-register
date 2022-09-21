@@ -433,7 +433,7 @@ export default {
             for (var i = 0; i < this.mycolumns.length; i++) {
                 var item = this.mycolumns[i];
                 if (item.title == undefined) showcolumns.push(item);
-                else if (newcolumns.contains(item.title)) showcolumns.push(item);
+                else if (newcolumns.includes(item.title)) showcolumns.push(item);
             }
             this.columns = showcolumns;
         },

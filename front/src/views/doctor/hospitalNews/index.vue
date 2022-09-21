@@ -153,8 +153,8 @@ export default {
                                 h("img", {
                                     attrs: {
                                         src: params.row.photo,
-                                        height: 80,
-                                        width: 100,
+                                        height: 100,
+                                        width: "100%",
                                     },
                                 }),
                             ]);
@@ -529,7 +529,7 @@ export default {
             for (var i = 0; i < this.mycolumns.length; i++) {
                 var item = this.mycolumns[i];
                 if (item.title == undefined) showcolumns.push(item);
-                else if (newcolumns.contains(item.title)) showcolumns.push(item);
+                else if (newcolumns.includes(item.title)) showcolumns.push(item);
             }
             this.columns = showcolumns;
         },

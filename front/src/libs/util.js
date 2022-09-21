@@ -9,7 +9,7 @@ let util = {
 };
 
 util.title = function (title) {
-    title = title || '基于Vue的医院门诊预约挂号管理系统';
+    title = title || '基于Vue和SpringBoot的通用管理系统';
     window.document.title = title;
 };
 
@@ -78,11 +78,7 @@ util.getRouterObjByName = function (routers, name) {
 };
 
 util.handleTitle = function (vm, item) {
-    if (typeof item.title == 'object') {
-        return vm.$t(item.title.i18n);
-    } else {
-        return item.title;
-    }
+    return item.title;
 };
 
 util.setCurrentPath = function (vm, name) {
@@ -317,7 +313,7 @@ util.initRouter = function (vm) {
         meta: {
             title: '404-页面不存在'
         },
-        component: 'error-page/404'
+        component: 'template/404'
     }];
     // 判断用户是否登录
     let userInfo = Cookies.get('userInfo')
@@ -444,7 +440,7 @@ util.initRouterNode = function (routers, data) {
         let meta = {};
         // 给页面添加权限、标题、第三方网页链接
         meta.permTypes = menu.permTypes ? menu.permTypes : null;
-        meta.title = menu.title ? menu.title + " - 基于Vue的医院门诊预约挂号管理系统" : null;
+        meta.title = menu.title ? menu.title + " - 基于Vue和SpringBoot的通用管理系统" : null;
         meta.url = menu.url ? menu.url : null;
         menu.meta = meta;
 

@@ -1,0 +1,119 @@
+package ${entity.entityPackage};
+
+import cn.zwz.basics.baseClass.ZwzBaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+<%
+if(entity.activiti&&!entity.isTree){
+%>
+import org.springframework.data.annotation.Transient;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
+<%
+}
+%>
+<%
+if(entity.isTree){
+%>
+import org.springframework.data.annotation.Transient;
+import com.baomidou.mybatisplus.annotation.TableField;
+
+import javax.persistence.Column;
+import java.math.BigDecimal;
+<%
+}
+%>
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+/**
+ * @author ${entity.author}
+ */
+@Data
+@Entity
+@DynamicInsert
+@DynamicUpdate
+@Table(name = "${entity.tableName}")
+@TableName("${entity.tableName}")
+@ApiModel(value = "${entity.description}")
+public class ${entity.className} extends ZwzBaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
+    <%
+    if(!entity.isTree){
+    %>
+    @ApiModelProperty(value = "${entity.description}标题")
+    private String title;
+    <%
+    }
+    %>
+
+    <%
+    if(entity.activiti&&!entity.isTree){
+    %>
+    @ApiModelProperty(value = "关联流程申请表id")
+    private String actBusinessId;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "申请用户")
+    private String applyUser;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "表单路由名")
+    private String routeName;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "流程实例id")
+    private String procInstId;
+
+    @Transient
+    @TableField(exist=false)
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value = "提交申请时间")
+    private Date applyTime;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "状态 0草稿默认 1处理中 2结束")
+    private Integer status;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "结果状态 0未提交默认 1处理中 2通过 3驳回")
+    private Integer result;
+    <%
+    }
+    %>
+    <%
+    if(entity.isTree){
+    %>
+    @ApiModelProperty(value = "分类名称")
+    private String title;
+
+    @ApiModelProperty(value = "父id")
+    private String parentId;
+
+    @ApiModelProperty(value = "是否为父节点(含子节点) 默认false")
+    private Boolean isParent = false;
+
+    @ApiModelProperty(value = "排序值")
+    @Column(precision = 10, scale = 2)
+    private BigDecimal sortOrder;
+
+    @Transient
+    @TableField(exist=false)
+    @ApiModelProperty(value = "父节点名称")
+    private String parentTitle;
+    <%
+    }
+    %>
+}

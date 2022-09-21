@@ -63,8 +63,8 @@ import {
     addDoctor,
     getAllHospitalSubjectList
 } from "./api.js";
-import dict from "@/views/my-components/zwz/dict";
-import uploadThumb from "@/views/my-components/zwz/upload-pic-input";
+import dict from "@/views/template/dict";
+import uploadThumb from "@/views/template/upload-pic-input";
 export default {
     name: "add",
     components: {

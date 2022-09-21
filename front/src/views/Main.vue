@@ -1,7 +1,3 @@
-<style lang="less">
-@import "./main.less";
-</style>
-
 <template>
 <div class="main" :class="{'main-hide-text': shrink}">
     <div class="sidebar-menu-con menu-bar" :style="{width: shrink ? '60px' : '220px', overflow: shrink ? 'visible' : 'auto'}">
@@ -68,13 +64,6 @@
                     </DropdownMenu>
                 </Dropdown>
                 <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
-                <Dropdown @on-click="handleLanDropdown" class="options">
-                    <Icon type="md-globe" :size="24" class="language"></Icon>
-                    <DropdownMenu slot="list">
-                        <DropdownItem name="zh-CN">中文</DropdownItem>
-                        <DropdownItem name="en-US">English</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
                 <lock-screen></lock-screen>
                 <div class="user-dropdown-menu-con">
                     <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -85,9 +74,9 @@
                                 <Avatar :src="avatarPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
                             </a>
                             <DropdownMenu slot="list">
-                                <DropdownItem name="ownSpace">{{ $t('userCenter') }}</DropdownItem>
-                                <DropdownItem name="changePass">{{ $t('changePass') }}</DropdownItem>
-                                <DropdownItem name="loginout" divided>{{ $t('logout') }}</DropdownItem>
+                                <DropdownItem name="changePass">修改密码</DropdownItem>
+                                <DropdownItem name="ownSpace">个人门户</DropdownItem>
+                                <DropdownItem name="loginout" divided>退出</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </Row>
@@ -105,7 +94,6 @@
             </keep-alive>
         </div>
     </div>
-    <!-- 全局加载动画 -->
     <circleLoading class="loading-position" v-show="loading" />
 </div>
 </template>
@@ -116,13 +104,9 @@ import tagsPageOpened from "./main-components/tags-page-opened.vue";
 import breadcrumbNav from "./main-components/breadcrumb-nav.vue";
 import fullScreen from "./main-components/fullscreen.vue";
 import lockScreen from "./main-components/lockscreen/lockscreen.vue";
-import circleLoading from "@/views/my-components/zwz/circle-loading.vue";
+import circleLoading from "@/views/template/circle-loading.vue";
 import Cookies from "js-cookie";
 import util from "@/libs/util.js";
-import {
-    getOtherSet
-} from "@/api/index";
-var client;
 export default {
     components: {
         shrinkableMenu,
@@ -134,13 +118,12 @@ export default {
     },
     data() {
         return {
-            sliceNum: 4,
+            sliceNum: 5,
             shrink: false,
             username: "",
             userId: "",
             isFullScreen: false,
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-            firstThreeNav: [],
             lastNav: [],
             navType: 1
         };
@@ -192,12 +175,13 @@ export default {
                 this.$store.commit("addOpenSubmenu", pathArr[1].name);
             }
             let userInfo = JSON.parse(Cookies.get("userInfo"));
+            console.log("当前登陆者的信息：", userInfo);
             this.username = userInfo.nickname;
             this.userId = userInfo.id;
             this.checkTag(this.$route.name);
             let currWidth = document.body.clientWidth;
             if (currWidth <= 1200) {
-                this.sliceNum = 2;
+                this.sliceNum = 5;
             }
         },
         selectNav(name) {
@@ -215,39 +199,26 @@ export default {
         toggleClick() {
             this.shrink = !this.shrink;
         },
-        handleLanDropdown(name) {
-            this.$i18n.locale = name;
-            this.$store.commit("switchLang", name);
-        },
         handleClickUserDropdown(name) {
             if (name == "ownSpace") {
-                util.openNewPage(this, "ownspace_index");
+                util.openNewPage(this, "my_home_index");
                 this.$router.push({
-                    name: "ownspace_index"
+                    name: "my_home_index"
                 });
             } else if (name == "changePass") {
-                util.openNewPage(this, "change_pass");
+                util.openNewPage(this, "password");
                 this.$router.push({
-                    name: "change_pass"
+                    name: "password"
                 });
             } else if (name == "loginout") {
                 // 退出登录
+                this.$store.commit("setLoading", false);
                 this.$store.commit("setLoading", true);
-                getOtherSet().then(res => {
-                    this.$store.commit("setLoading", false);
-                    if (res.result) {
-                        let domain = res.result.ssoDomain;
-                        Cookies.set("accessToken", "", {
-                            domain: domain,
-                            expires: 7
-                        });
-                    }
-                    this.$store.commit("logout", this);
-                    this.$store.commit("clearOpenedSubmenu");
-                    this.setStore("accessToken", "");
-                    // 强制刷新页面 重新加载router
-                    location.reload();
-                });
+                this.$store.commit("logout", this);
+                this.$store.commit("clearOpenedSubmenu");
+                this.setStore("accessToken", "");
+                // 强制刷新页面 重新加载router
+                location.reload();
             }
         },
         checkTag(name) {
@@ -274,13 +245,13 @@ export default {
         resize() {
             let currWidth = document.body.clientWidth;
             if (currWidth <= 1200 && currWidth > 900) {
-                this.sliceNum = 3;
+                this.sliceNum = 6;
                 this.shrink = true;
             } else if (currWidth <= 900) {
-                this.sliceNum = 1;
+                this.sliceNum = 5;
                 this.shrink = true;
             } else {
-                this.sliceNum = 4;
+                this.sliceNum = 7;
                 this.shrink = false;
             }
         }
@@ -313,3 +284,7 @@ export default {
     }
 };
 </script>
+
+<style lang="less">
+@import "./main.less";
+</style>

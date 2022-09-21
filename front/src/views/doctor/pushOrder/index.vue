@@ -99,7 +99,10 @@
             </Form>
         </Row>
         <Row>
-            <Table :loading="loading" :height="tableHeight" border stripe size="small" :columns="orderColumns" :data="orderData"></Table>
+            <Col span="24">
+            <Table :loading="loading" :height="tableHeight" border stripe size="small" :columns="orderColumns" :data="orderData">
+            </Table>
+            </Col>
         </Row>
         <Row type="flex" justify="end" class="page">
             <Page :current="orderSearchForm.pageNumber" :total="orderTotal" :page-size="orderSearchForm.pageSize" @on-change="changeOrderPage" @on-page-size-change="changeOrderPageSize" :page-size-opts="[15,20,50]" size="small" show-total show-elevator show-sizer></Page>
@@ -355,6 +358,7 @@ export default {
                     key: "action",
                     align: "center",
                     width: 200,
+                    fixed: "right",
                     render: (h, params) => {
                         return h("div", [
                             h(
@@ -504,13 +508,13 @@ export default {
         },
         handleReset() {
             this.searchForm = { // 搜索框初始化对象
-                pageNumber: 1, // 当前页数
-                pageSize: 15, // 页面大小
-                sort: "createTime", // 默认排序字段
-                order: "desc", // 默认排序方式
-            },
-            // 重新加载数据
-            this.getDataList();
+                    pageNumber: 1, // 当前页数
+                    pageSize: 15, // 页面大小
+                    sort: "createTime", // 默认排序字段
+                    order: "desc", // 默认排序方式
+                },
+                // 重新加载数据
+                this.getDataList();
         },
         changeSort(e) {
             this.searchForm.sort = e.key;
@@ -559,7 +563,7 @@ export default {
             for (var i = 0; i < this.mycolumns.length; i++) {
                 var item = this.mycolumns[i];
                 if (item.title == undefined) showcolumns.push(item);
-                else if (newcolumns.contains(item.title)) showcolumns.push(item);
+                else if (newcolumns.includes(item.title)) showcolumns.push(item);
             }
             this.columns = showcolumns;
         },
